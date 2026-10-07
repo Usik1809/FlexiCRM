@@ -1,0 +1,34 @@
+package services
+
+import (
+	"FlexiCRM/internal/models"
+	"FlexiCRM/internal/repository"
+)
+
+type NoteService struct {
+	*BaseService
+	Repo *repository.NoteRepository
+}
+
+func NewNoteService(repo *repository.NoteRepository, base *BaseService) *NoteService {
+	return &NoteService{
+		BaseService: base,
+		Repo:        repo,
+	}
+}
+
+func (s *NoteService) GetByID(id uint) (*models.Note, error) {
+	return s.Repo.GetByID(id)
+}
+
+func (s *NoteService) GetAll() ([]models.Note, error) {
+	return s.Repo.GetAll()
+}
+
+func (s *NoteService) Search(filters models.NoteSearch) ([]models.Note, error) {
+	return s.Repo.Search(filters)
+}
+
+func (s *NoteService) Delete(id uint) error {
+	return s.Repo.Delete(&models.Note{}, id)
+}
